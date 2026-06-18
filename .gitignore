@@ -1,0 +1,10 @@
+# Obsidian 配置文件夹（不需要同步）
+.obsidian/
+
+# 系统文件
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.bak
