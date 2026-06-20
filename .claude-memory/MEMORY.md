@@ -7,3 +7,4 @@
 - [Notion迁移Obsidian（2026-06-19）](2026-06-19-notion-to-obsidian.md) — 23篇笔记+图片docx从Notion批量迁移到Obsidian，含清洗脚本
 - [提醒GitHub同步（2026-06-19）](2026-06-19-remind-github-sync.md) — 每次完成任务后提醒用户同步笔记和记忆到GitHub
 - [New 3D Graph配置（2026-06-20）](2026-06-20-new-3d-graph.md) — 颜色分组+力学参数+GitHub暗色风格，groups语法直接写文件夹名
+- [第二周周五写作日（2026-06-20）](2026-06-20-week2-friday-writing.md) — PARTIAL案例分析+DPO/PEFT补充，用"两个小人吵架"比喻对齐税
