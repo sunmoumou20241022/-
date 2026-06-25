@@ -8,3 +8,6 @@
 - [提醒GitHub同步（2026-06-19）](2026-06-19-remind-github-sync.md) — 每次完成任务后提醒用户同步笔记和记忆到GitHub
 - [New 3D Graph配置（2026-06-20）](2026-06-20-new-3d-graph.md) — 颜色分组+力学参数+GitHub暗色风格，groups语法直接写文件夹名
 - [第二周周五写作日（2026-06-20）](2026-06-20-week2-friday-writing.md) — PARTIAL案例分析+DPO/PEFT补充，用"两个小人吵架"比喻对齐税
+- [思维错误修正（2026-06-20）](2026-06-20-thinking-mistakes.md) — 不迎合要质疑、先查国外、信息差分快慢
+- [底层蛊（2026-06-20）](2026-06-20-底层蛊.md) — Claude思维修正手册，持续补充
+- [LLM安全周日加餐（2026-06-21）](2026-06-21-sunday-snack-llm-security.md) — Gandalf/AI Village纯LLM安全CTF周日练手计划

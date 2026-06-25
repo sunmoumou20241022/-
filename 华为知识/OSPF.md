@@ -1,0 +1,185 @@
+![[Pasted image 20260625105925.png]]
+### 配置命令的“核心心法”：三层金字塔模型 (Mental Model)
+
+无论网络多复杂，单台设备的配置永远严格遵循以下自底向上（从物理到协议）的三个步骤：
+
+|**思考层级**|**心里要想的事情（业务逻辑）**|**对应的华为 VRP 命令集**|
+|---|---|---|
+|**第一步：打地基**<br><br>  <br><br>(二层与物理层)|_“我是哪台设备？我本地需要哪些 VLAN？接口是接电脑还是接邻居（Trunk / Access / Portswitch）？”_|`sysname`<br><br>  <br><br>`vlan batch`<br><br>  <br><br>`port link-type`<br><br>  <br><br>`portswitch`|
+|**第二步：建身份**<br><br>  <br><br>(三层本地接口)|_“我的名字（Router ID）是什么？我永不掉线的心脏（LoopBack）在哪？员工出城的网关大门（Vlanif IP）是多少？”_|`router id`<br><br>  <br><br>`interface LoopBack 0`<br><br>  <br><br>`interface Vlanif`<br><br>  <br><br>`ip address`|
+|**第三步：通路网**<br><br>  <br><br>(三层动态路由)|_“我要启动什么动态路由协议？我们在哪个房间（Area 0）开会？我要把本地哪些地盘（网段）作为拼图广播给全天下？”_|`ospf`<br><br>  <br><br>`area 0`<br><br>  <br><br>`network`|
+
+### 2. 实战演练：用这套思维配置 RA 的全流程
+
+现在，我们把这套思维模型带入到你刚才提供的 **RA** 脚本中，看看专家在面对空白 CLI 时是如何组织大脑思路的：
+
+#### 思考第一步：打地基（先把设备名和二层通道开辟出来）
+
+> **心里想**：首先，我要把这台设备改名为 RA ，不然混淆了。然后，它既然要对接二层的 S1 交换机，我必须先创建 `vlan 10` ，并且把连接 S1 的物理口 `e0/0/0` 改成二层 Trunk 模式，放行 VLAN 10 。
+
+
+#### 思考第二步：建身份（把本地的各种网关 IP 和心脏 IP 固化下来）
+
+> **心里想**：二层修好了，现在搞三层。首先，全局定下我的大名叫 `1.1.1.1`。接着，我要把员工的网关大门建在 `Vlanif 10` 房间里，IP 地址给 `192.168.1.1` 。同时，把对接 RB 路由器的物理口 `g0/0/0` 也配上骨干 IP。最后，别忘了给自己造一颗永不掉线的心脏 `LoopBack 0` ，IP 同样给 `1.1.1.1` 。
+
+**物理拓扑决定配置流向**：先配接入层（交换机 S1/S2），再配核心层（路由器 RA/RB）。从边缘往中心汇聚，思路会极其丝滑。
+R1:
+
+[Huawei]sysname R1
+
+[R1]vlan 10
+
+[R1-vlan10]q
+
+[R1]int e0/0/0
+
+[R1-Ethernet0/0/0]portswitch
+
+[R1-Ethernet0/0/0]port link-type trunk
+
+[R1-Ethernet0/0/0]port trunk allow-pass vlan  10
+
+[R1-Ethernet0/0/0]qu
+
+[R1]router id 1.1.1.1
+
+[R1]int Vlanif 10
+
+[R1-Vlanif10]ip address 192.168.1.1 24
+
+[R1-Vlanif10]q
+
+[R1]int g0/0/0
+
+[R1-GigabitEthernet0/0/0]ip address 192.168.0.1 24
+
+[R1-GigabitEthernet0/0/0]q
+
+[R1]interface LoopBack 0
+
+[R1-LoopBack0]ip address 1.1.1.1 32
+
+[R1-LoopBack0]q
+
+[R1]ospf 1
+
+[R1-ospf-1]area 0
+
+[R1-ospf-1-area-0.0.0.0]network 192.168.1.0 0.0.0.255
+
+[R1-ospf-1-area-0.0.0.0]network  192.168.0.0 0.0.0.255
+
+[R1-ospf-1-area-0.0.0.0]network 1.1.1.1 0.0.0.0
+
+[R1-ospf-1-area-0.0.0.0]return
+
+R2:
+
+[Huawei]sysname R2
+
+[R2]vlan 20
+
+[R2-vlan20]q
+
+[R2]int e0/0/0
+
+[R2-Ethernet0/0/0]p
+
+[R2-Ethernet0/0/0]portswitch
+
+[R2-Ethernet0/0/0]port link-type trunk
+
+[R2-Ethernet0/0/0]port trunk allow-pass vlan 20
+
+[R2-Ethernet0/0/0]q
+
+[R2]router id 2.2.2.2
+
+[R2]int Vlanif 20
+
+[R2-Vlanif20]ip address 192.168.2.1 24
+
+[R2-Vlanif20]q
+
+[R2]int g0/0/0
+
+[R2-GigabitEthernet0/0/0]ip address 192.168.0.2 24
+
+[R2-GigabitEthernet0/0/0]q
+
+[R2]int LoopBack 1
+
+[R2-LoopBack1]ip address 2.2.2.2 32
+
+[R2-LoopBack1]q
+
+[R2]ospf
+
+[R2-ospf-1]area 0
+
+[R2-ospf-1-area-0.0.0.0]network 192.168.2.0 0.0.0.255
+
+[R2-ospf-1-area-0.0.0.0]network 192.168.0.0 0.0.0.255
+
+[R2-ospf-1-area-0.0.0.0]network 2.2.2.2 0.0.0.0
+
+[R2-ospf-1-area-0.0.0.0]return
+
+Sw1:
+
+<Huawei>sys
+
+[Huawei]sys
+
+[Huawei]sysname n
+
+[Huawei]sysname sw1
+
+[sw1]int g0/0/1
+
+[sw1-GigabitEthernet0/0/1]port link-type hybrid
+
+[sw1-GigabitEthernet0/0/1]port hybrid tagged vlan 10
+
+[sw1-GigabitEthernet0/0/1]q
+
+[sw1-GigabitEthernet0/0/2]port link-type hybrid
+
+[sw1]int g0/0/2
+
+[sw1-GigabitEthernet0/0/2]port hybrid pvid vlan 10
+
+[sw1-GigabitEthernet0/0/2]port hybrid untagged vlan 10
+
+[sw1-GigabitEthernet0/0/2]q
+
+Sw2:
+
+<Huawei>sys
+
+[sw@]sysname sw2
+
+[sw2]int g0/0/2
+
+[sw2]vlan 20
+
+[sw2-vlan20]q
+
+[sw2]int g0/0/2
+
+[sw2-GigabitEthernet0/0/2]port link-type hybrid
+
+[sw2-GigabitEthernet0/0/2]port hybrid pvid vlan 20
+
+[sw2-GigabitEthernet0/0/2]port hybrid untagged vlan 20
+
+[sw2-GigabitEthernet0/0/2]q
+
+[sw2]int g0/0/1
+
+[sw2-GigabitEthernet0/0/1]port link-type hybrid
+
+[sw2-GigabitEthernet0/0/1]port hybrid tagged vlan 20
+
+[sw2-GigabitEthernet0/0/1]q
+
