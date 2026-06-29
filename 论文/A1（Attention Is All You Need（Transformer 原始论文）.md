@@ -304,4 +304,4 @@ $$lrate = d_{\text{model}}^{-0.5} \cdot \min(step\_num^{-0.5},\ step\_num \cdot 
 
 ---
 
-[[一年之约/第一周/第一日]] | [[论文/A4（Red-Teaming Language Models to Reduce Harms（Anthropic）.md]] | [[论文/F3（Safety Alignment Should Be Made More Than Just a Few Tokens Deep（浅层安全对齐，Qi et al.）.md]]
+[[第一周第一日]] | [[论文/A4（Red-Teaming Language Models to Reduce Harms（Anthropic）.md]] | [[论文/F3（Safety Alignment Should Be Made More Than Just a Few Tokens Deep（浅层安全对齐，Qi et al.）.md]]
