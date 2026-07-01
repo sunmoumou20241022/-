@@ -14,3 +14,6 @@
 - [第三周第一日笔记（2026-06-26）](2026-06-26-week3-monday-attention-dilution.md) — Attention稀释原理 + Crescendo/TAP多轮攻击入门
 - [Obsidian图谱配色（2026-06-26）](2026-06-26-obsidian-graph-color.md) — Graph View颜色分组配置完成+Juggl/Excalidraw已删除
 - [持续更新机制首次检查（2026-06-27）](2026-06-27-monthly-update.md) — 学习计划论文/工具/价格核实，新增持续更新机制章节
+- [VRF知识迁移（2026-06-30）](2026-06-30-vrf-knowledge-transfer.md) — 孙全智的VRF知识文档从桌面迁移到华为知识库Obsidian
+- [底层蛊v2.5迭代（2026-06-30）](2026-06-30-claudemd-v25-upgrade.md) — QDF新鲜度分级+搜假设本身+引用质量五条；工具规格写入Obsidian
+- [底层蛊v2.5.1第六节重写（2026-07-01）](2026-07-01-claudemd-v251-context-rewrite.md) — 上下文管理重写：压缩存档9段协议+防漂移自检+无缝继续

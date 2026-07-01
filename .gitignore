@@ -7,4 +7,5 @@ Thumbs.db
 
 # 临时文件
 *.tmp
-*.bak
+*.bak.claude/worktrees/
+.claude/
