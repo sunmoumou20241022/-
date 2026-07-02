@@ -17,3 +17,5 @@
 - [VRF知识迁移（2026-06-30）](2026-06-30-vrf-knowledge-transfer.md) — 孙全智的VRF知识文档从桌面迁移到华为知识库Obsidian
 - [底层蛊v2.5迭代（2026-06-30）](2026-06-30-claudemd-v25-upgrade.md) — QDF新鲜度分级+搜假设本身+引用质量五条；工具规格写入Obsidian
 - [底层蛊v2.5.1第六节重写（2026-07-01）](2026-07-01-claudemd-v251-context-rewrite.md) — 上下文管理重写：压缩存档9段协议+防漂移自检+无缝继续
+- [底层蛊v2.5.2社区指南借鉴（2026-07-02）](2026-07-02-claudemd-v252-guide-borrow.md) — firecrawl搜索替代+Hooks强制自检+跨会话持久化+失败路径登记+子任务验收+Skills固化
+- [底层蛊v3.0模块化大改革（2026-07-02）](2026-07-02-claudemd-v300-modular-reform.md) — 单CLAUDE.md拆为宪法+索引+11个rules+4个skills+2个agents+hooks
